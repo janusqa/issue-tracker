@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import prisma from '@/prisma/client';
-
-export const IssueSchema = z.object({
-    title: z.string().min(1, 'Title is required').max(255),
-    description: z.string().min(1, 'Description is required'),
-});
+import { IssueValidationSchema } from '@/app/Validationchema';
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
-    const validation = IssueSchema.safeParse(body);
+    const validation = IssueValidationSchema.safeParse(body);
     if (!validation.success)
         return NextResponse.json(validation.error.format(), { status: 400 });
 

@@ -10,6 +10,7 @@ import { z } from 'zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { IssueValidationSchema } from '@/app/Validationchema';
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 export interface IssueForm extends z.infer<typeof IssueValidationSchema> {}
 
@@ -52,11 +53,7 @@ const NewIssuePage = () => {
                         {...register('title')}
                     ></TextField.Input>
                 </TextField.Root>
-                {errors.title && (
-                    <Text as="p" color="red">
-                        {errors.title.message}
-                    </Text>
-                )}
+                <ErrorMessage>{errors.title?.message}</ErrorMessage>
                 <Controller
                     name="description"
                     control={control}
@@ -64,12 +61,7 @@ const NewIssuePage = () => {
                         <SimpleMDE placeholder="Description" {...field} />
                     )}
                 />
-                {errors.description && (
-                    <Text as="p" color="red">
-                        {errors.description.message}
-                    </Text>
-                )}
-
+                <ErrorMessage>{errors.description?.message}</ErrorMessage>
                 <Button>Submit New Issue</Button>
             </form>
         </div>

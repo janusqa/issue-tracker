@@ -2,8 +2,8 @@
 
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
-import { Button, TextField } from '@radix-ui/themes';
-import React from 'react';
+import { Button, Callout, TextField } from '@radix-ui/themes';
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import axios from 'axios';
@@ -19,29 +19,45 @@ export interface IssueForm extends z.infer<typeof IssueFormSchema> {}
 const NewIssuePage = () => {
     const router = useRouter();
     const { register, control, handleSubmit } = useForm<IssueForm>();
+    const [error, setError] = useState('');
+
+    const handleForm = async (data: IssueForm) => {
+        try {
+            await axios.post('/api/issues', data);
+            router.push('/issues');
+        } catch (error) {
+            console.log(error);
+            setError('An unexpected error occured');
+        }
+    };
+
     return (
-        <form
-            className="max-w-xl space-y-3"
-            onSubmit={handleSubmit(async (data) => {
-                await axios.post('/api/issues', data);
-                router.push('/issues');
-            })}
-        >
-            <TextField.Root>
-                <TextField.Input
-                    placeholder="title"
-                    {...register('title')}
-                ></TextField.Input>
-            </TextField.Root>
-            <Controller
-                name="description"
-                control={control}
-                render={({ field }) => (
-                    <SimpleMDE placeholder="Description" {...field} />
-                )}
-            />
-            <Button>Submit New Issue</Button>
-        </form>
+        <div className="max-w-xl">
+            {error && (
+                <Callout.Root color="red" className="mb-5">
+                    <Callout.Text>
+                        You will need admin privileges to install and access
+                        this application.
+                    </Callout.Text>
+                </Callout.Root>
+            )}
+            <form className="space-y-3" onSubmit={handleSubmit(handleForm)}>
+                <TextField.Root>
+                    <TextField.Input
+                        placeholder="title"
+                        {...register('title')}
+                    ></TextField.Input>
+                </TextField.Root>
+                <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                        <SimpleMDE placeholder="Description" {...field} />
+                    )}
+                />
+                <Button>Submit New Issue</Button>
+            </form>
+        </div>
     );
 };
 

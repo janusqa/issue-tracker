@@ -1,0 +1,5 @@
+{
+    "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', monospace",
+    "terminal.integrated.fontFamily": "'JetBrains Mono'",
+    "terminal.integrated.gpuAcceleration": "off"
+}

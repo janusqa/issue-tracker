@@ -1,5 +1,6 @@
 'use client';
 
+// import dynamic from 'next/dynamic';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import { Button, Callout, TextField, Text } from '@radix-ui/themes';
@@ -12,6 +13,15 @@ import { useRouter } from 'next/navigation';
 import { IssueValidationSchema } from '@/app/Validationchema';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+
+// We lazy load to disable ssr so this MDE component is rendered on
+// client instead of server to avoide any bugs
+// NOTE: this bug was fixed so now we can load compent as normal
+// Comment out below and dynamic above
+// Re-enable the simpleMDE import as normal
+// const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+//     ssr: false,
+// });
 
 export interface IssueForm extends z.infer<typeof IssueValidationSchema> {}
 

@@ -4,8 +4,6 @@ import Link from '@/app/components/Link';
 import prisma from '@/prisma/client';
 import IssueStatusBadge from '../components/IssueStatusBadge';
 import IssueActions from './IssueActions';
-import { cachedDataVersionTag } from 'v8';
-import { SYSTEM_ENTRYPOINTS } from 'next/dist/shared/lib/constants';
 
 const IssuesPage = async () => {
     const issues = await prisma.issue.findMany();

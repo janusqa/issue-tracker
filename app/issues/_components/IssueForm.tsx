@@ -1,7 +1,7 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-// import SimpleMDE from 'react-simplemde-editor';
+// import dynamic from 'next/dynamic';
+import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import { Button, Callout, TextField, Text } from '@radix-ui/themes';
 import { useState } from 'react';
@@ -15,11 +15,12 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { Issue } from '@prisma/client';
 
+// NOTE WE DECIDED TO LOAD ENTIRE ISSUE FORM DYNICMALLY INSTEAD SO BACK TO LOADIN THIS AS NORMAL
 // We lazy load to disable ssr so this MDE component is rendered on
 // client instead of server to avoide any bugs
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-    ssr: false,
-});
+// const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+//     ssr: false,
+// });
 
 export interface IssueFormData extends z.infer<typeof IssueSchema> {}
 

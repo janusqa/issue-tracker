@@ -4,6 +4,8 @@ import Link from '@/app/components/Link';
 import prisma from '@/prisma/client';
 import IssueStatusBadge from '../components/IssueStatusBadge';
 import IssueActions from './IssueActions';
+import { cachedDataVersionTag } from 'v8';
+import { SYSTEM_ENTRYPOINTS } from 'next/dist/shared/lib/constants';
 
 const IssuesPage = async () => {
     const issues = await prisma.issue.findMany();
@@ -48,4 +50,33 @@ const IssuesPage = async () => {
     );
 };
 
+// FULL ROUTE CACHING (cache on the server)
+// Used to stroe the output of statically rendered routs (routes witout params)
+//
+// This is a static page since it has no parameters.
+// At build time it will be rendered and stored on the server
+// We however need it to be dynamic since we need to see new
+// issues that we add we can use either of the below which means
+// cache for 0 seconds.
+// Note: This is server side cache
+export const dynamic = 'force-dynamic';
+// export const revalidate = 0
+
 export default IssuesPage;
+
+// Other types of caching
+// DATA CACHE
+// - used when fectching data with "Fetch API"
+// - stored in the FileSystem
+// - Permanent until we redeploy
+// eg.  fetch('...', {cache: 'no-cache'})
+// eg.  fetch('...', {next: {revalidate: 3600}})
+
+// Router Caching (client side caching)
+// This exists on the client in browser memory
+// - stores the payload of pages as user navigates
+// - lasts for a session
+// - can be cleared by doing a browser refresh
+// - by default statically rendered routes are refreshed every 5 mins
+// - by default dynamically rendered routes are refreshed every 30s
+// - we can force a revalidation by calling router.refresh

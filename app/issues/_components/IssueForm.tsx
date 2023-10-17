@@ -46,7 +46,7 @@ const IssueForm = ({ issue }: Props) => {
             setIsSubmitting(true);
             if (issue) await axios.patch(`/api/issues/${issue.id}`, data);
             else await axios.post('/api/issues', data);
-            router.push('/issues');
+            router.push('/issues/index');
             router.refresh(); // force client-side cache to be refreshed
         } catch (error) {
             setIsSubmitting(false);

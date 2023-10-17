@@ -13,7 +13,7 @@ import classNames from 'classnames';
 const NavBar = () => {
     const links = [
         { label: 'Dashboard', href: '/' },
-        { label: 'Issues', href: '/issues' },
+        { label: 'Issues', href: '/issues/index' },
     ];
 
     const currentPath = usePathname();

@@ -11,6 +11,7 @@ import { AiFillBug } from 'react-icons/ai';
 import classNames from 'classnames';
 import { useSession } from 'next-auth/react';
 import { Avatar, Container, DropdownMenu, Text } from '@radix-ui/themes';
+import Skeleton from './components/Skeleton';
 
 const NavBar = () => {
     return (
@@ -64,7 +65,7 @@ const NavMenu = () => {
 const AuthMenu = () => {
     const { status, data: session } = useSession();
 
-    if (status === 'loading') return null;
+    if (status === 'loading') return <Skeleton width="3rem" />;
 
     if (status === 'unauthenticated')
         return (

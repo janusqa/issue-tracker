@@ -17,6 +17,8 @@ model Issue {
   status      Status   @default(OPEN)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId      String?  @db.VarChar(255)
+  user        User?    @relation(fields: [userId], references: [id])
 }
 
 enum Status {
@@ -35,6 +37,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  issues        Issue[]
 
   @@map("users")
 }

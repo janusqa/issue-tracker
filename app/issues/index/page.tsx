@@ -4,10 +4,22 @@ import Link from '@/app/components/Link';
 import prisma from '@/prisma/client';
 import IssueStatusBadge from '../../components/IssueStatusBadge';
 import IssueActions from './IssueActions';
+import { Status } from '@prisma/client';
 
-const IssuesPage = async () => {
-    const issues = await prisma.issue.findMany();
+interface Props {
+    searchParams: { status: Status };
+}
+
+const IssuesPage = async ({ searchParams }: Props) => {
+    const statuses = Object.values(Status);
+    const status = statuses.includes(searchParams.status)
+        ? searchParams.status
+        : undefined;
+
+    const issues = await prisma.issue.findMany({ where: { status } });
+
     // await new Promise((resolve) => setTimeout(resolve, 2000));
+
     return (
         <div>
             <IssueActions />
@@ -23,6 +35,7 @@ const IssuesPage = async () => {
                         </Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
+
                 <Table.Body>
                     {issues.map((issue) => (
                         <Table.Row key={issue.id}>

@@ -31,7 +31,7 @@ const AssigneeSelect = ({ issue }: Props) => {
     return (
         <>
             <Select.Root
-                defaultValue={issue.assigneeId || 'unassigned'}
+                defaultValue={issue.assigneeId || ''}
                 onValueChange={assignIssue}
             >
                 <Select.Trigger placeholder="Assign..." />

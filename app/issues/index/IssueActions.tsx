@@ -4,14 +4,10 @@ import React from 'react';
 import IssueStatusFilter from './IssueStatusFilter';
 import { Status } from '@prisma/client';
 
-interface Props {
-    status: Status | undefined;
-}
-
-const IssueActions = ({ status }: Props) => {
+const IssueActions = () => {
     return (
         <div className="flex justify-between mb-5">
-            <IssueStatusFilter status={status} />
+            <IssueStatusFilter />
             <Button>
                 <Link href="/issues/new">New Issue</Link>
             </Button>

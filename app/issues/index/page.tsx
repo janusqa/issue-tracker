@@ -9,7 +9,7 @@ import { ArrowUpIcon } from '@radix-ui/react-icons';
 import Pagination from '@/app/components/Pagination';
 
 interface Props {
-    searchParams: { status: Status; orderBy: keyof Issue };
+    searchParams: { status: Status; orderBy: keyof Issue; page: string };
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
@@ -96,7 +96,11 @@ const IssuesPage = async ({ searchParams }: Props) => {
                     ))}
                 </Table.Body>
             </Table.Root>
-            <Pagination pageSize={10} currentPage={10} itemCount={100} />
+            <Pagination
+                pageSize={10}
+                currentPage={parseInt(searchParams.page)}
+                itemCount={100}
+            />
         </div>
     );
 };

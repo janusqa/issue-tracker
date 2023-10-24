@@ -6,7 +6,7 @@ import { Status } from '@prisma/client';
 
 const IssueActions = () => {
     return (
-        <div className="flex justify-between mb-5">
+        <div className="flex justify-between">
             <IssueStatusFilter />
             <Button>
                 <Link href="/issues/new">New Issue</Link>

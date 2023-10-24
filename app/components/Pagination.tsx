@@ -16,6 +16,7 @@ interface Props {
 }
 
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
+    console.log(itemCount, pageSize, currentPage);
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -25,6 +26,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         const currentPage = page < 1 ? 1 : page > pageCount ? pageCount : page;
         const query = new URLSearchParams(searchParams);
         query.set('page', currentPage.toString());
+
         const queryString = query.size > 0 ? `?${query.toString()}` : '';
         router.push(`/issues/index${queryString}`);
     };

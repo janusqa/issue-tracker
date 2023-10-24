@@ -11,7 +11,11 @@ const statuses: { label: string; value: Status }[] = [
     { label: 'In Progress', value: 'IN_PROGRESS' },
 ];
 
-const IssueStatusFilter = () => {
+interface Props {
+    status: Status | undefined;
+}
+
+const IssueStatusFilter = ({ status }: Props) => {
     const router = useRouter();
 
     const onFilterStatus = (status: string) => {
@@ -20,7 +24,7 @@ const IssueStatusFilter = () => {
     };
 
     return (
-        <Select.Root onValueChange={onFilterStatus}>
+        <Select.Root onValueChange={onFilterStatus} defaultValue={status || ''}>
             <Select.Trigger placeholder="Filter by status..." />
             <Select.Content>
                 <Select.Group>

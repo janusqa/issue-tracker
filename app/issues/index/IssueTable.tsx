@@ -47,20 +47,20 @@ const IssueTable = ({ searchParams, issues }: Props) => {
             <Table.Body>
                 {issues.map((issue) => (
                     <Table.Row key={issue.id}>
-                        <Table.ColumnHeaderCell>
+                        <Table.Cell>
                             <AppLink href={`/issues/${issue.id}`}>
                                 {issue.title}
                             </AppLink>
                             <div className="block md:hidden">
                                 <IssueStatusBadge status={issue.status} />
                             </div>
-                        </Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        </Table.Cell>
+                        <Table.Cell className="hidden md:table-cell">
                             <IssueStatusBadge status={issue.status} />
-                        </Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        </Table.Cell>
+                        <Table.Cell className="hidden md:table-cell">
                             {issue.createdAt.toDateString()}
-                        </Table.ColumnHeaderCell>
+                        </Table.Cell>
                     </Table.Row>
                 ))}
             </Table.Body>

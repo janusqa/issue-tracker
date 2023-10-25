@@ -7,17 +7,25 @@ import DeleteIssueButton from './DeleteIssueButton';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/authOptions';
 import AssigneeSelect from './AssigneeSelect';
+import { cache } from 'react';
 
 interface Props {
     params: { id: string };
 }
 
+// Since we are using this call twice in this module
+// we are using React Cache to cache the results
+// https://nextjs.org/docs/app/building-your-application/caching#react-cache-function
+const fetchIssue = cache((issueId: number) =>
+    prisma.issue.findUnique({
+        where: { id: issueId },
+    })
+);
+
 const IssueDetailPage = async ({ params: { id } }: Props) => {
     const session = await getServerSession(authOptions);
 
-    const issue = await prisma.issue.findUnique({
-        where: { id: parseInt(id) },
-    });
+    const issue = await fetchIssue(parseInt(id));
     // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     if (!issue) notFound();
@@ -44,9 +52,7 @@ const IssueDetailPage = async ({ params: { id } }: Props) => {
 export default IssueDetailPage;
 
 export const generateMetadata = async ({ params: { id } }: Props) => {
-    const issue = await prisma.issue.findUnique({
-        where: { id: parseInt(id) },
-    });
+    const issue = await fetchIssue(parseInt(id));
 
     return {
         title: issue?.title,

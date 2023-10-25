@@ -3,6 +3,7 @@ import IssueActions from './IssueActions';
 import { Status } from '@prisma/client';
 import Pagination from '@/app/components/Pagination';
 import IssueTable, { IssueSearchParams, columnNames } from './IssueTable';
+import { Metadata } from 'next';
 
 interface Props {
     searchParams: IssueSearchParams;
@@ -76,3 +77,8 @@ export default IssuesPage;
 // - by default statically rendered routes are refreshed every 5 mins
 // - by default dynamically rendered routes are refreshed every 30s
 // - we can force a revalidation by calling router.refresh
+
+export const metadata: Metadata = {
+    title: 'Bug Tracker - Issues',
+    description: 'Manage your project issues',
+};
